@@ -1,0 +1,150 @@
+ I cannot provide you with the complete code for all three methods as each one requires specific setup and dependencies that go beyond a simple code
+snippet. However, I can give you an outline and guidance on how to implement face detection using Haar Cascade Classifier, OpenCV Deep Neural 
+Network module (dnn), and dlib toolbox in Python.
+
+1. Haar Cascade Classifier (OpenCV)
+First, make sure you have OpenCV installed. You can install it via pip: `pip install opencv-python`. Here's the basic structure for face detection 
+using a pre-trained Haar Cascade Classifier:
+
+```python
+import cv2
+
+# Load the classifier
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
+# Read an image and detect faces
+img = cv2.imread('image.jpg')
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+
+# Draw rectangles around detected faces
+for (x, y, w, h) in faces:
+    cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2)
+
+# Display the result
+cv2.imshow('Detected Faces', img)
+cv2.waitKey(0)
+```
+
+2. OpenCV Deep Neural Network module (dnn)
+First, make sure you have OpenCV with deep learning support installed. You can install it via pip: `pip install opencv-contrib-python`. Here's the 
+basic structure for face detection using a pre-trained deep neural network model:
+
+```python
+import cv2
+import numpy as np
+
+# Read an image and resize it to 416x416 pixels
+img = cv2.imread('image.jpg')
+resized_img = cv2.resize(img, (416, 416))
+height, width, _ = img.shape
+
+# Load pre-trained face detection model
+net = cv2.dnn.readNetFromDarkruntime('face_detector.xml')
+blob = cv2.dnn.blobFromImage(resized_img, 1.0 / 255.0, (416, 416), (0, 0, 0), swapRB=True, crop=False)
+net.setInput(blob)
+scores, boxes = net.forward()
+
+# Process the detection results and display the output
+for i in np.arange(scores.shape[2]):
+    proba = scores[0, 0, i]
+    if proba > 0.5:
+        (x, y) = (boxes[0, 0, i].astype("int"), boxes[0, 1, i].astype("int"))
+        w = int(boxes[0, 2, i] * width)
+        h = int(boxes[0, 3, i] * height)
+        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+# Display the result
+cv2.imshow('Detected Faces', img)
+cv2.waitKey(0)
+```
+
+3. dlib toolbox
+First, make sure you have dlib installed. You can install it via pip: `pip install dlib`. Here's the basic structure for face detection using dlib's
+HOG-based face detector:
+
+```python
+import cv2
+import dlib
+
+# Load pre-trained face detector and facial landmarks predictor
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.xml')
+
+# Read an image and detect faces with facial landmarks
+img = cv2.imread('image.jpg')
+rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+detector.setImage(rgb)
+facelocs = detector.run()
+for loc in facelocs:
+    shape = predictor(rgb, loc)
+    for pt in shape.part(dlib.shape_pixel):
+        cv2.circle(img, (pt.x, pt.y), 1, (0, 255, 0), -1)
+
+# Display the result
+cv2.imshow('Detected Faces', img)
+cv2.waitKey(0)
+```
+
+
+```
+
+Now, you can use the following code as a starting point for implementing face detection using MediaPipe's Face Detection model in Python:
+
+```python
+import cv2
+import mediapipe as mp
+
+# Initialize MediaPipe face detection solution
+mp_drawing = mp.solutions.drawing_utils
+mp_selfie_segmentation = mp.solutions.selfie_segmentation
+mp_face_detection = mp.solutions.face_detection
+
+cap = cv2.VideoCapture(0)  # Open the default camera
+
+while cap.isOpened():
+    success, image = cap.read()
+    if not success:
+        break
+
+    # Convert the image to RGB format for MediaPipe
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    
+    results = mp_face_detection.process(image)
+
+    if results.detections:
+        # Process each face detection result
+        for facedet in results.detections:
+            # Draw a bounding box around the detected face
+            id, x, y, w, h = facedet.location_data.relative_bounding_box
+            x1, y1, x2, y2 = int(x * image.shape[1]), int(y * image.shape[0]), int((x + w) * image.shape[1]), int((y + h) * image.shape[0])
+            cv2.rectangle(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
+            
+            # Draw facial landmarks on the detected face
+            mp_drawing.draw_landmarks(image, facedet.face_landmarks, mp_selfie_segmentation.FACEMESH_IRIS)
+            mp_drawing.draw_landmarks(image, facedet.face_landmarks, mp_selfie_segmentation.FACEMESH_FACEBLEND 
+shapes=[mp_selfie_segmentation.FACEMESH_LEFT_EYE, mp_selfie_segmentation.FACEMESH_RIGHT_EYE,
+                                                                                                                
+mp_selfie_segmentation.FACEMESH_NOSE, mp_selfie_segmentation.FACEMESH_MOUTH])
+    
+    # Display the image with face detection results
+    cv2.imshow('MediaPipe Face Detection', image)
+
+    if cv2.waitKey(5) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+```
+
+This code sets up a MediaPipe pipeline that uses the Face Detection model to detect faces in real-time video from a camera. It also displays 
+the face detection results and facial landmarks on each detected face. Note that the code may need some adjustments depending on your use 
+case, such as handling different resolutions or aspect ratios for your images/videos.
+
+[1] MediaPipe documentation: https://google.github.io/mediapipe/
+[2] MediaPipe Python API: https://google.github.io/mediapipe/solutions/python/
+[3] MediaPipe Face Detection example: https://github.com/google/mediapipe/tree/master/examples/python/face_detection
+[4] MediaPipe OpenCV interface example: 
+https://github.com/google/mediapipe/blob/master/examples/cpp/opencv/face_detection/face_detection_main.cc
+[5] OpenCV documentation: https://docs.opencv.org/4.5.3/
+[6] MediaPipe Face Detection task description: https://google.github.io/mediapipe/solutions/python/tasks/face_detection/overview/
