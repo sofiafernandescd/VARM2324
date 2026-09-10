@@ -17,23 +17,26 @@ def detect_faces(image):
     
     return image
 
-# Initialize the camera and start capturing real-time images
-cap = cv2.VideoCapture(0)
+# Run when script is executed (not imported)
+if __name__ == "__main__":
 
-while True:
-    # Capture a frame from the camera
-    ret, frame = cap.read()
-    
-    # Detect faces in the captured frame
-    detected_frame = detect_faces(frame)
-    
-    # Display the detected frame
-    cv2.imshow('Face Detection', detected_frame)
-    
-    # Check for the 'q' key to exit the loop
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+    # Initialize the camera and start capturing real-time images
+    cap = cv2.VideoCapture(0)
 
-# Release the camera and close all windows
-cap.release()
-cv2.destroyAllWindows()
+    while True:
+        # Capture a frame from the camera
+        ret, frame = cap.read()
+        
+        # Detect faces in the captured frame
+        detected_frame = detect_faces(frame)
+        
+        # Display the detected frame
+        cv2.imshow('Face Detection', detected_frame)
+        
+        # Check for the 'q' key to exit the loop
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    # Release the camera and close all windows
+    cap.release()
+    cv2.destroyAllWindows()
