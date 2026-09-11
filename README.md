@@ -1,105 +1,111 @@
 # Artificial Vision & Mixed Reality
 
-> Practical computer vision and mixed-reality projects developed during the MSc in Computer Engineering and Multimedia.
+> Practical computer vision projects developed during the MSc in Computer Engineering and Multimedia at ISEL.
 
-This repository contains laboratory work and project implementations developed for the **Artificial Vision and Mixed Reality** course during my Master's degree.
+This repository contains laboratory work and projects developed for the **Artificial Vision and Mixed Reality** course during the 2023–2024 academic year.
 
-The work explores several practical computer vision problems, from camera calibration and fiducial markers to real-time face detection and facial feature processing.
-
-Rather than being a single application, the repository documents a collection of experiments and implementations developed throughout the course.
+The work covers the full computer-vision pipeline, from camera calibration and image preprocessing to face detection, classical face recognition and object detection.
 
 ---
 
-## Highlights
+## Projects
 
-### Camera calibration & fiducial markers
+### 1. Camera Calibration & ArUco / ChArUco
 
-The `Lab2` work explores camera calibration and marker-based computer vision, including:
+Camera calibration and fiducial-marker experiments using **OpenCV**, including:
 
-* Camera calibration
-* Calibration image processing
-* **ArUco boards and markers**
+* Camera calibration and parameter estimation
+* ArUco marker and board detection
 * ChArUco calibration
-* Camera parameter estimation
-* Marker generation and detection
+* Marker generation
+* Calibration data analysis
 
-The repository includes both Python implementations and calibration data/results used during the experiments.
+![Camera calibration and ArUco detection](./Lab2-A50308/images/Aruco.png)
+>Registration of cubes in a 2x2 board of 6x6 250 ArUco markers with
+ids 1 and 4.
 
-### Face detection
-
-The `varm` project includes real-time face detection using **OpenCV** and Haar Cascade classifiers.
-
-The implementation captures frames directly from a camera, converts them to grayscale and detects faces using OpenCV's `detectMultiScale` pipeline before displaying the detected regions in real time.
-
-### Facial analysis
-
-The project also contains material related to facial image processing, including normalized face images, facial landmark models and supporting datasets/assets.
 
 ---
 
-## Selected Results
+### 2. Face Detection & Facial Landmarks
 
-<!-- Replace these placeholders with screenshots from the repository -->
+Comparison of different approaches for detecting and analysing faces, including:
 
-### Camera calibration & ArUco
+* Haar Cascade classifiers
+* OpenCV DNN-based detection
+* Dlib
+* MediaPipe
+* Facial landmark detection
+* Face normalization
 
-![Camera calibration and ArUco markers](./assets/camera-calibration.png)
+The repository includes both image-based and real-time camera experiments.
 
-> **Screenshot to add:** Show the calibration setup, ArUco/ChArUco board or an example of detected markers. This is probably the strongest visual for demonstrating the computer-vision work in `Lab2`.
+![Face detection and facial landmarks](./Lab2-A50308/images/face_detection.png)
 
-### Real-time face detection
+> Face detection using HOG + Linear SVM 
 
-![Real-time face detection](./assets/face-detection.png)
+![Face detection and facial landmarks](./Lab2-A50308/images/landmarks.png)
 
-> **Screenshot to add:** Run the face-detection implementation with a webcam and take a screenshot showing the detected face bounding boxes. This makes the project immediately understandable without reading the code.
+> Dlib's 68 facial feature points
 
 ---
 
-## Technical Work
+### 3. Eigenfaces & Fisherfaces
 
-The repository demonstrates practical experience with:
+Classical face-recognition experiments using **PCA/Eigenfaces** and **LDA/Fisherfaces**, combined with KNN classification.
+
+The objective was to explore how different linear representations of facial images affect recognition. Eigenfaces focus on principal directions of variation, while Fisherfaces aim to find projections that better discriminate between classes.
+
+Implemented components include:
+
+* Face image loading and preprocessing
+* Face normalization
+* Eigenfaces with KNN
+* Fisherfaces with KNN
+* Comparison of classical face-recognition approaches
+
+
+---
+
+## Technical Skills
 
 * **Python**
 * **OpenCV**
 * **NumPy**
-* Computer vision pipelines
+* **Dlib**
+* **MediaPipe**
+* **YOLOv4**
+* PCA / Eigenfaces
+* LDA / Fisherfaces
+* KNN classification
 * Camera calibration
-* ArUco / ChArUco markers
-* Fiducial marker detection
-* Real-time image processing
-* Face detection
-* Facial image normalization
+* ArUco / ChArUco
+* Facial landmarks
+* Image preprocessing and normalization
+* Real-time computer vision
 * Jupyter notebooks
-* Camera-based computer vision
-
-The implementations combine standalone Python scripts with notebooks and supporting image/calibration data.
 
 ---
 
-## Repository Structure
+## What this project demonstrates
+
+This coursework provided hands-on experience with both **classical and learning-based computer vision**, including the transition from image processing and geometric calibration to face recognition and object detection.
+
+It also provided practical experience with the stages of a visual-processing pipeline:
 
 ```text
-VARM2324/
-│
-├── Lab2/
-│   ├── Camera calibration
-│   ├── ArUco / ChArUco calibration
-│   ├── Marker generation
-│   ├── Calibration data
-│   └── lab2.ipynb
-│
-├── varm/
-│   ├── Face detection
-│   ├── Facial image processing
-│   ├── Facial landmarks
-│   ├── Computer vision exercises
-│   └── project1.ipynb
-│
-└── README.md
+Camera / Image
+      ↓
+Preprocessing
+      ↓
+Detection
+      ↓
+Feature Extraction
+      ↓
+Classification / Recognition
+      ↓
+Visual Result
 ```
-
-The repository structure reflects the progression from individual laboratory exercises towards larger computer-vision experiments.
-
 
 ---
 
@@ -110,7 +116,7 @@ The repository structure reflects the progression from individual laboratory exe
 **Institution:** ISEL
 **Academic year:** 2023–2024
 
-This repository contains coursework developed as part of the Master's programme.
+This repository is a portfolio-oriented record of coursework and practical experiments developed during the Master's programme.
 
 ---
 
@@ -120,13 +126,14 @@ This repository contains coursework developed as part of the Master's programme.
 
 Data Scientist / ML Engineer
 
-* GitHub: [@sofiafernandescd](https://github.com/sofiafernandescd)
+[GitHub](https://github.com/sofiafernandescd)
 
 ---
 
 ## License & Academic Attribution
 
-This repository is primarily an **academic record and portfolio of coursework**.
+This repository is primarily an academic record and portfolio of coursework.
 
-Some materials originate from or build upon course-provided resources and external libraries, datasets, models or assets. Their respective authors and licenses remain applicable.
+Some materials originate from or build upon course-provided resources, external libraries, datasets, models or other third-party assets. Their respective authors and licenses remain applicable.
 
+The original implementations and modifications authored by me may be reused for educational or research purposes, with appropriate attribution.
